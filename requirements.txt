@@ -1,6 +1,8 @@
 jupyter
+matplotlib
+notebook-as-pdf
 numpy
 pandas
-scipy
-matplotlib
 pyspark
+scipy
+sklearn
