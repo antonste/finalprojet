@@ -1,6 +1,6 @@
 services:
   spark-master:
-    image: bitnami/spark:latest
+    image: bitnami/spark:3.5.0
     container_name: spark-master
     hostname: spark-master
     environment:
@@ -14,7 +14,7 @@ services:
       - spark-network
 
   spark-worker:
-    image: bitnami/spark:latest
+    image: bitnami/spark:3.5.0
     hostname: spark-worker
     environment:
       - SPARK_MODE=worker
@@ -29,7 +29,7 @@ services:
       replicas: 3
 
   jupyter:
-    image: jupyter/pyspark-notebook:latest
+    image: jupyter/pyspark-notebook:spark-3.5.0
     container_name: jupyter
     ports:
       - "8888:8888"
