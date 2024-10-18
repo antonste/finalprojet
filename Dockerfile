@@ -1,8 +1,3 @@
-FROM jupyter/pyspark-notebook:spark-3.1.1
-
-WORKDIR /finalproject
-
+FROM bitnami/spark:3.5.0
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
-
-EXPOSE 8888

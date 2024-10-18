@@ -1,8 +1,2 @@
-jupyter
-matplotlib
-notebook-as-pdf
 numpy
 pandas
-pyspark
-scipy
-sklearn

@@ -1,6 +1,8 @@
 services:
   spark-master:
-    image: bitnami/spark:3.5.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: spark-master
     hostname: spark-master
     environment:
@@ -10,11 +12,15 @@ services:
     ports:
       - "8080:8080"
       - "7077:7077"
+    volumes:
+      - ./notebooks:/home/jovyan/work
     networks:
       - spark-network
 
   spark-worker:
-    image: bitnami/spark:3.5.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     hostname: spark-worker
     environment:
       - SPARK_MODE=worker
@@ -25,18 +31,20 @@ services:
       - spark-master
     networks:
       - spark-network
+    volumes:
+      - ./notebooks:/home/jovyan/work
     deploy:
       replicas: 3
 
   jupyter:
-    image: jupyter/pyspark-notebook:spark-3.5.0
+    build:
+      context: .
+      dockerfile: DockerfileNotebook
     container_name: jupyter
     ports:
       - "8888:8888"
     volumes:
       - ./notebooks:/home/jovyan/work
-    environment:
-      - JUPYTER_ENABLE_LAB=yes
     depends_on:
       - spark-master
     networks:

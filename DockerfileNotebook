@@ -1,0 +1,27 @@
+FROM python:3.11.8
+
+# Install necessary dependencies
+RUN apt-get update && apt-get install -y openjdk-17-jdk curl
+
+# Install Spark
+RUN curl -O https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz && \
+    tar -xvzf spark-3.5.0-bin-hadoop3.tgz && \
+    mv spark-3.5.0-bin-hadoop3 /opt/spark
+
+# Set environment variables
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$SPARK_HOME/bin:$PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+
+# Install Python dependencies
+RUN pip install pyspark==3.5.0 notebook
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+# Expose Jupyter port
+EXPOSE 8888
+
+WORKDIR /home/jovyan/work/
+
+# Start Jupyter Notebook
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
