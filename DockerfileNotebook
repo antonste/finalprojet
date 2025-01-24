@@ -14,7 +14,8 @@ ENV PATH=$SPARK_HOME/bin:$PATH
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
 
 # Install Python dependencies
-RUN pip install pyspark==3.5.0 notebook
+RUN pip install --upgrade pip
+RUN pip install pyspark==3.5.0 notebook ipywidgets
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
